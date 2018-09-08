@@ -20,12 +20,13 @@ document.addEventListener('DOMContentLoaded', function(){
     wrap.dataset.playing = true;
   });
 
-  // listen for click event on camera cameraControls
+  // listen for click event on camera controls
   cameraControls.addEventListener('click', function(e){
     video.style.zoom = 1;
     video.switchCamera(e.target.dataset.cameraIndex);
   });
 
+  // listen for click event on video controls
   videoControls.addEventListener('click', function(e){
     video.play();
   });
