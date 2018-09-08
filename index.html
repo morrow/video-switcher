@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>Video Switcher</title>
+    <link rel='stylesheet' href='video-switcher.css' />
+  </head>
+  <body>
+    <main>
+      <h1>Video Switcher</h1>
+      <div id='video-switcher-wrap'>
+        <video src='video.mp4'></video>      
+        <ul id='video-controls'>
+          <li data-video-action='play'>▶</li>
+        </ul>
+        <ul id='camera-controls'>
+          <li data-camera-index=0>Camera 1</li>
+          <li data-camera-index=1>Camera 2</li>
+          <li data-camera-index=2>Camera 3</li>
+          <li data-camera-index=3>Camera 4</li>
+        </ul>
+      </div>
+    </main>
+    <script type='text/javascript' src='video-switcher.js'></script>
+  </body>
+</html>
