@@ -12,6 +12,7 @@ h1 {
   margin:1em;
 }
 
+/* video switcher wrap */
 #video-switcher-wrap {
   overflow:hidden;
   position:relative;
@@ -23,43 +24,47 @@ h1 {
   zoom:0.5;
 }
 
-#video-switcher-wrap[data-playing="true"] #video-controls {
-  display:none;
-}
-
 #video-switcher-wrap[data-playing="true"] video {
   zoom:1;
 }
 
+/* camera controls */
 #video-switcher-wrap #camera-controls {
   margin:0;
   padding:0;
   position:absolute;
   display:flex;
   flex-direction:column;
-  list-style:none;
   justify-content:space-around;
 }
 
-#video-switcher-wrap #camera-controls li {
-  background:white;
-  padding:2em;
+#video-switcher-wrap #camera-controls canvas {
+  background:transparent;
   cursor:pointer;
   border:3px solid transparent;
 }
 
-#video-switcher-wrap #camera-controls li:hover {
+#video-switcher-wrap #camera-controls canvas:hover {
   background:#eee;
 }
 
-#video-switcher-wrap[data-selected-camera="0"] #camera-controls li[data-camera-index="0"],
-#video-switcher-wrap[data-selected-camera="1"] #camera-controls li[data-camera-index="1"],
-#video-switcher-wrap[data-selected-camera="2"] #camera-controls li[data-camera-index="2"],
-#video-switcher-wrap[data-selected-camera="3"] #camera-controls li[data-camera-index="3"] {
+#video-switcher-wrap[data-selected-camera="0"] #camera-controls canvas[data-camera-index="0"],
+#video-switcher-wrap[data-selected-camera="1"] #camera-controls canvas[data-camera-index="1"],
+#video-switcher-wrap[data-selected-camera="2"] #camera-controls canvas[data-camera-index="2"],
+#video-switcher-wrap[data-selected-camera="3"] #camera-controls canvas[data-camera-index="3"] {
   border-color:#09c;
 }
 
+#video-switcher-wrap[data-playing="true"] #camera-controls {
+  transition:all 0.2s linear;  
+  opacity:0;
+}
 
+#video-switcher-wrap[data-playing="true"]:hover #camera-controls {
+  opacity:1;
+}
+
+/* video controls */
 #video-switcher-wrap #video-controls {
   display:flex;
   position:absolute;
@@ -67,11 +72,28 @@ h1 {
   color:white;
 }
 
+#video-switcher-wrap[data-playing="true"]:hover #video-controls {
+  opacity:1;
+}
+
+#video-switcher-wrap[data-playing="true"] #video-controls {
+}
+
+#video-switcher-wrap[data-playing="true"] #video-controls {
+  opacity:0;
+}
+
 #video-switcher-wrap #video-controls li {
   cursor:pointer;
 }
 #video-switcher-wrap #video-controls li[data-video-action="play"] {
+  transition:all 0.1s linear;
+  color:#eee;
   font-size:5em;
-  text-shadow:0px 0px 3px rgba(0, 0, 0, 0.25);
+  text-shadow:0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
+#video-switcher-wrap #video-controls li[data-video-action="play"]:hover {
+  color:white;
+  text-shadow:0px 0px 15px rgba(0, 0, 0, 0.9);
+}

@@ -12,12 +12,12 @@
         <ul id='video-controls'>
           <li data-video-action='play'>▶</li>
         </ul>
-        <ul id='camera-controls'>
-          <li data-camera-index=0>Camera 1</li>
-          <li data-camera-index=1>Camera 2</li>
-          <li data-camera-index=2>Camera 3</li>
-          <li data-camera-index=3>Camera 4</li>
-        </ul>
+        <div id='camera-controls'>
+          <canvas data-camera-index=0></canvas>
+          <canvas data-camera-index=1></canvas>
+          <canvas data-camera-index=2></canvas>
+          <canvas data-camera-index=3></canvas>  
+        </div>
       </div>
     </main>
     <script type='text/javascript' src='video-switcher.js'></script>
