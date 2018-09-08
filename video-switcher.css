@@ -17,6 +17,7 @@ h1 {
   overflow:hidden;
   position:relative;
   margin:0 auto;
+  border:1px solid black;
 } 
 
 #video-switcher-wrap video {
@@ -41,11 +42,11 @@ h1 {
 #video-switcher-wrap #camera-controls canvas {
   background:transparent;
   cursor:pointer;
-  border:3px solid transparent;
+  border:2px solid #999;
 }
 
 #video-switcher-wrap #camera-controls canvas:hover {
-  background:#eee;
+  border-color:white;
 }
 
 #video-switcher-wrap[data-selected-camera="0"] #camera-controls canvas[data-camera-index="0"],
