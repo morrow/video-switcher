@@ -45,11 +45,20 @@ h1 {
   background:white;
   padding:2em;
   cursor:pointer;
+  border:3px solid transparent;
 }
 
 #video-switcher-wrap #camera-controls li:hover {
   background:#eee;
 }
+
+#video-switcher-wrap[data-selected-camera="0"] #camera-controls li[data-camera-index="0"],
+#video-switcher-wrap[data-selected-camera="1"] #camera-controls li[data-camera-index="1"],
+#video-switcher-wrap[data-selected-camera="2"] #camera-controls li[data-camera-index="2"],
+#video-switcher-wrap[data-selected-camera="3"] #camera-controls li[data-camera-index="3"] {
+  border-color:#09c;
+}
+
 
 #video-switcher-wrap #video-controls {
   display:flex;
