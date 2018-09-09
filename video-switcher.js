@@ -6,11 +6,15 @@ function main(){
   let videoControls = wrap.querySelector( '#video-controls' );
   let cameraControls = wrap.querySelector( '#camera-controls' );  
   let cameraControlCanvases = document.querySelectorAll( '#camera-controls canvas' );
+  let cameraControlContexts = [];
+  let cameraControlCoordinates = [];
+  let canvas_width = 0;
+  let canvas_height = 0;
 
   // listen for video metadata load event to get dimensions
   video.addEventListener( 'loadedmetadata', function(){
     //create canvas elements
-    updateCanvasElements();
+    createCanvasElements();
     // update wrap dimensions
     wrap.style.width = `${ video.videoWidth / 2 }px`;
     wrap.style.height = `${ video.videoHeight / 2 }px`;
@@ -20,37 +24,54 @@ function main(){
     // update camera controls positioning
     cameraControls.style.left = `${ video.videoWidth / 2 - cameraControls.offsetWidth - 20 }px`;
     cameraControls.style.height = `${ video.videoHeight / 2 }px`;
+    // listen for video ready play
+    video.addEventListener( 'canplay', function(){
+      updateCanvasElements(0);
+    });
   });
 
   // update canvas elements
-  updateCanvasElements = function(){
+  createCanvasElements = function(){
     for(var i = 0; i < cameraControlCanvases.length; i++){
       let canvas = cameraControlCanvases[i];
       canvas.width = video.videoWidth / 10;
       canvas.height = video.videoHeight / 10;
-      let context = canvas.getContext( '2d' );
+      canvas_width = canvas.width;
+      canvas_height = canvas.height;
+      cameraControlContexts[i] = canvas.getContext( '2d' );
       // get coordinates  
       let x, y = 0;
       if( i == 0 || i == 2 ) x = 0;
       if( i == 0 || i == 1 ) y = 0;
       if( i == 1 || i == 3 ) x = -canvas.width;
       if( i == 2 || i == 3) y = -canvas.height;
-      // draw image from video to canvas
-      context.drawImage(video, x, y, canvas.width * 2, canvas.height * 2);
+      cameraControlCoordinates[i] = {
+        x: x,
+        y: y,
+      }
     }
   }
 
-  // listen for video ready play
-  video.addEventListener( 'canplay', function(){
-    updateCanvasElements();
-  });
+  updateCanvasElements = function(i){
+    // draw image from video to canvas
+    cameraControlContexts[i].drawImage(video, cameraControlCoordinates[i].x, cameraControlCoordinates[i].y, canvas_width * 2, canvas_height * 2);
+    i++  
+    if(i > 3) i = 0
+    requestAnimationFrame(function(){updateCanvasElements(i)});
+  }
+
 
   // listen for video events
   video.addEventListener( 'playing', function(){
     wrap.dataset.playing = true;
-    video.update_cameras_interval = window.setInterval(updateCanvasElements, 10);
   });
 
+  // listen for video events
+  video.addEventListener( 'ended', function(){
+    wrap.dataset.playing = false;
+    video.currentTime = 0;
+  });
+  
   // listen for click event on camera controls
   cameraControls.addEventListener( 'click', function(e){
     video.switchCamera( parseInt( e.target.dataset.cameraIndex ) );
