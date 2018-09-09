@@ -6,6 +6,8 @@ function main(){
   let videoControls = wrap.querySelector( '#video-controls' );
   let cameraControls = wrap.querySelector( '#camera-controls' );  
   let cameraControlCanvases = document.querySelectorAll( '#camera-controls canvas' );
+  
+  // set up canvas context and canvas dimension variables for animation performance
   let cameraControlContexts = [];
   let cameraControlCoordinates = [];
   let canvas_width = 0;
@@ -24,20 +26,22 @@ function main(){
     // update camera controls positioning
     cameraControls.style.left = `${ video.videoWidth / 2 - cameraControls.offsetWidth - 20 }px`;
     cameraControls.style.height = `${ video.videoHeight / 2 }px`;
-    // listen for video ready play
+    // listen for video ready play and being updating canvas
     video.addEventListener( 'canplay', function(){
       updateCanvasElements(0);
     });
   });
 
-  // update canvas elements
+  // create canvas elements
   createCanvasElements = function(){
     for(var i = 0; i < cameraControlCanvases.length; i++){
       let canvas = cameraControlCanvases[i];
+      // set canvas dimensions
       canvas.width = video.videoWidth / 10;
       canvas.height = video.videoHeight / 10;
       canvas_width = canvas.width;
       canvas_height = canvas.height;
+      // get and cache 2d context
       cameraControlContexts[i] = canvas.getContext( '2d' );
       // get coordinates  
       let x, y = 0;
@@ -45,6 +49,7 @@ function main(){
       if( i == 0 || i == 1 ) y = 0;
       if( i == 1 || i == 3 ) x = -canvas.width;
       if( i == 2 || i == 3) y = -canvas.height;
+      // cache coordinates
       cameraControlCoordinates[i] = {
         x: x,
         y: y,
@@ -56,7 +61,9 @@ function main(){
     // draw image from video to canvas
     cameraControlContexts[i].drawImage(video, cameraControlCoordinates[i].x, cameraControlCoordinates[i].y, canvas_width * 2, canvas_height * 2);
     i++  
+    // loop to beginning if over
     if(i > 3) i = 0
+    // use requestAnimationFrame API for performance
     requestAnimationFrame(function(){updateCanvasElements(i)});
   }
 
